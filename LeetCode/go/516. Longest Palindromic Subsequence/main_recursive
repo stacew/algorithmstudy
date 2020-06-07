@@ -1,0 +1,47 @@
+package main
+
+import "fmt"
+
+func myMax(a, b int) int {
+	if a >= b {
+		return a
+	}
+	return b
+}
+
+var strOrigin string
+var length = 0
+
+func isPalindrome(s string) int {
+	length := len(s)
+	cnt := length / 2
+	for i := 0; i < cnt; i++ {
+		if s[i] != s[length-i-1] {
+			return -1
+		}
+	}
+	return length
+}
+
+func myRecusive(sub string, i int) int {
+	if i == length {
+		return isPalindrome(sub)
+	}
+
+	return myMax(myRecusive(sub, i+1), myRecusive(sub+strOrigin[i:i+1], i+1))
+}
+
+func longestPalindromeSubseq(s string) int {
+	strOrigin = s
+	length = len(strOrigin)
+	return myRecusive("", 0)
+}
+
+func main() {
+	fmt.Println(longestPalindromeSubseq("abca"))
+	fmt.Println(longestPalindromeSubseq("aaaaaabbbcbbb"))
+	fmt.Println(longestPalindromeSubseq(""))
+	fmt.Println(longestPalindromeSubseq("aaaaaabbbczxafvxcvbbb"))
+
+	//스택 오버플로우
+}

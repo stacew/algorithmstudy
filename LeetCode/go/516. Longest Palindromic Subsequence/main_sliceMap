@@ -1,0 +1,54 @@
+package main
+
+import "fmt"
+
+func isPalindrome(s string) int {
+	length := len(s)
+	cnt := length / 2
+	for i := 0; i < cnt; i++ {
+		if s[i] != s[length-i-1] {
+			return -1
+		}
+	}
+	return length
+}
+func longestPalindromeSubseq(s string) int {
+	sLen := len(s)
+	if sLen == 0 {
+		return 0
+	}
+	tempSlice := make([]string, 0, 10000)
+	tempMap := make(map[string]bool)
+	tempSlice = append(tempSlice, "")
+	for i := 0; i < sLen; i++ {
+		tempLen := len(tempSlice)
+		data := s[i : i+1]
+		for j := 0; j < tempLen; j++ {
+			strTemp := tempSlice[j] + data
+			if _, ok := tempMap[strTemp]; ok {
+				continue
+			}
+			tempSlice = append(tempSlice, strTemp)
+			tempMap[strTemp] = true
+		}
+	}
+
+	retMax := 0
+	for j := 0; j < len(tempSlice); j++ {
+		tempLen := isPalindrome(tempSlice[j])
+		if tempLen > retMax {
+			retMax = tempLen
+		}
+	}
+
+	return retMax
+}
+
+func main() {
+	fmt.Println(longestPalindromeSubseq("abca"))
+	fmt.Println(longestPalindromeSubseq("aaaaaabbbcbbb"))
+	fmt.Println(longestPalindromeSubseq(""))
+	fmt.Println(longestPalindromeSubseq("aaaaaabbbczxafvxcvbbbaaaa"))
+
+	//500자 정도 메모리 터짐.
+}
