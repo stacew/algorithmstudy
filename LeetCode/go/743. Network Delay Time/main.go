@@ -5,6 +5,9 @@ import "fmt"
 var net [][]int
 var ret []int
 
+//set() 이 부분을 heap으로 pop, push처리하면 다익스트라 알고리즘이라고 한다.
+//다익스트라 알고리즘은 전체적으로 퍼지면서 이동하고,
+//목표를 향해 방향성을 갖고 더 빠르게 탐색하는 방식에는 에이스타 알고리즘이 있다고 한다.
 func set(t, src int) {
 	ret[src] = t
 	nLen := len(net[src])
