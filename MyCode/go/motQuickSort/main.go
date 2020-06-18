@@ -93,34 +93,28 @@ func motQSort(slice []int) {
 	startIndex := 0
 	endIndex := len(slice) - 1
 	nMidIndex := (startIndex + endIndex) / 2
-
-	nStart := slice[startIndex]
-	nMidPivot := slice[nMidIndex]
-	nEnd := slice[endIndex]
-	if nStart > nMidPivot {
+	if slice[startIndex] > slice[nMidIndex] {
 		slice[startIndex], slice[nMidIndex] = slice[nMidIndex], slice[startIndex]
-		nStart, nMidPivot = nMidPivot, nStart
 	}
-	if nEnd < nMidPivot {
+	if slice[nMidIndex] > slice[endIndex] {
 		slice[nMidIndex], slice[endIndex] = slice[endIndex], slice[nMidIndex]
-		nMidPivot = nEnd
-		if nStart > nMidPivot {
+		if slice[startIndex] > slice[nMidIndex] {
 			slice[startIndex], slice[nMidIndex] = slice[nMidIndex], slice[startIndex]
-			nMidPivot = nStart
 		}
 	}
 	if endIndex-startIndex < 3 {
 		return
 	}
 
-	slice[nMidIndex], slice[endIndex-1] = slice[endIndex-1], slice[nMidIndex]
+	nPivotIndex := endIndex - 1
+	slice[nMidIndex], slice[nPivotIndex] = slice[nPivotIndex], slice[nMidIndex]
 	nLeftIndex := startIndex + 1
-	nRightIndex := endIndex - 2
+	nRightIndex := nPivotIndex - 1
 	for true {
-		for nLeftIndex < endIndex && slice[nLeftIndex] < nMidPivot {
+		for nLeftIndex < endIndex && slice[nLeftIndex] < slice[nPivotIndex] {
 			nLeftIndex++
 		}
-		for startIndex < nRightIndex && nMidPivot < slice[nRightIndex] {
+		for startIndex < nRightIndex && slice[nPivotIndex] < slice[nRightIndex] {
 			nRightIndex--
 		}
 		if nLeftIndex > nRightIndex {
@@ -130,7 +124,7 @@ func motQSort(slice []int) {
 		nLeftIndex++
 		nRightIndex--
 	}
-	slice[nLeftIndex], slice[endIndex-1] = slice[endIndex-1], slice[nLeftIndex]
+	slice[nLeftIndex], slice[nPivotIndex] = slice[nPivotIndex], slice[nLeftIndex]
 	motQSort(slice[:nLeftIndex])
 	motQSort(slice[nLeftIndex+1:])
 }
@@ -141,33 +135,28 @@ func motQSort2(slice []int, startIndex, endIndex int) {
 
 	nMidIndex := (startIndex + endIndex) / 2
 
-	nStart := slice[startIndex]
-	nMidPivot := slice[nMidIndex]
-	nEnd := slice[endIndex]
-	if nStart > nMidPivot {
+	if slice[startIndex] > slice[nMidIndex] {
 		slice[startIndex], slice[nMidIndex] = slice[nMidIndex], slice[startIndex]
-		nStart, nMidPivot = nMidPivot, nStart
 	}
-	if nEnd < nMidPivot {
+	if slice[nMidIndex] > slice[endIndex] {
 		slice[nMidIndex], slice[endIndex] = slice[endIndex], slice[nMidIndex]
-		nMidPivot = nEnd
-		if nStart > nMidPivot {
+		if slice[startIndex] > slice[nMidIndex] {
 			slice[startIndex], slice[nMidIndex] = slice[nMidIndex], slice[startIndex]
-			nMidPivot = nStart
 		}
 	}
 	if endIndex-startIndex < 3 {
 		return
 	}
 
-	slice[nMidIndex], slice[endIndex-1] = slice[endIndex-1], slice[nMidIndex]
+	nPivotIndex := endIndex - 1
+	slice[nMidIndex], slice[nPivotIndex] = slice[nPivotIndex], slice[nMidIndex]
 	nLeftIndex := startIndex + 1
-	nRightIndex := endIndex - 2
+	nRightIndex := nPivotIndex - 1
 	for true {
-		for nLeftIndex < endIndex && slice[nLeftIndex] < nMidPivot {
+		for nLeftIndex < endIndex && slice[nLeftIndex] < slice[nPivotIndex] {
 			nLeftIndex++
 		}
-		for startIndex < nRightIndex && nMidPivot < slice[nRightIndex] {
+		for startIndex < nRightIndex && slice[nPivotIndex] < slice[nRightIndex] {
 			nRightIndex--
 		}
 		if nLeftIndex > nRightIndex {
@@ -177,7 +166,7 @@ func motQSort2(slice []int, startIndex, endIndex int) {
 		nLeftIndex++
 		nRightIndex--
 	}
-	slice[nLeftIndex], slice[endIndex-1] = slice[endIndex-1], slice[nLeftIndex]
+	slice[nLeftIndex], slice[nPivotIndex] = slice[nPivotIndex], slice[nLeftIndex]
 	motQSort2(slice, startIndex, nLeftIndex-1)
 	motQSort2(slice, nLeftIndex+1, endIndex)
 }
@@ -204,8 +193,8 @@ func initData(data []int) {
 }
 
 func main() {
-	sliceLen := 10000
-	totalCount := 100
+	sliceLen := 100000
+	totalCount := 10
 	baseData := make([]int, sliceLen)
 
 	basicQSortData := make([]int, sliceLen)
