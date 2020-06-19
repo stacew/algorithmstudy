@@ -3,6 +3,7 @@
 #include <time.h>
 #include "vectorUtil.h"
 #include "vectorUtil2.h"
+#include "vectorUtil3.h"
 
 bool CheckSortPrint(vector<int> &a_rVec)
 {
@@ -23,7 +24,7 @@ bool CheckSortPrint(vector<int> &a_rVec)
 int main()
 {
     time_t start;
-    vector<int> oVec0, oVec1, oVec2;
+    vector<int> oVec0, oVec1, oVec2, oVec3;
     cout << "start" << endl;
     for (int i = 0; i < 50000000; i++)
     {
@@ -31,6 +32,7 @@ int main()
         oVec0.push_back(nRand);
         oVec1.push_back(nRand);
         oVec2.push_back(nRand);
+        oVec3.push_back(nRand);
     }
     start = time(NULL);
     std::sort(oVec0.begin(), oVec0.end(), std::less<int>());
@@ -49,6 +51,12 @@ int main()
     VectorUtil2<int, Compare<int>>::QSort(oVec2);
     cout << time(NULL) - start << endl;
     CheckSortPrint(oVec2);
+
+    start = time(NULL);
+    VectorSort<int>::Sort(oVec3);
+    VectorSort<int>::Sort(oVec3);
+    cout << time(NULL) - start << endl;
+    CheckSortPrint(oVec3);
 
     return 0;
 }
