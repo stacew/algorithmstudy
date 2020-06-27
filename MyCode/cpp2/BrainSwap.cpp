@@ -83,6 +83,8 @@ int main() {
 
 	pMe1->PrintName(); // My Name Is Another 출력
 	pYou1->PrintName(); // My Name Is Owen 출력
+	delete pYou1;
+	delete pMe1;	
 #endif
 	cout << endl;
 #if 1
@@ -104,6 +106,8 @@ int main() {
 
 	pMe2->PrintName(); // My Name Is Another 출력
 	pYou2->PrintName(); // My Name Is Owen 출력
+	delete pYou2;
+	delete pMe2;	
 #endif
 	return 0;
 }
