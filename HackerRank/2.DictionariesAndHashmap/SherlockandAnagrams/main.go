@@ -31,13 +31,11 @@ func sherlockAndAnagrams(s string) int32 {
 	for i := 1; i < sLen; i++ {
 		for j := 0; j+i < sLen; j++ {
 			text1 := s[j : j+i]
-			map1 := make(map[byte]int) // T-T
+			map1 := make(map[byte]int) // T-T 1/2
 			for i := 0; i < len(text1); i++ {
 				map1[text1[i]]++
 			}
-
 			for k := j + 1; k+i <= sLen; k++ {
-				s[k : k+i]
 				if checkString(text1, s[k:k+i], map1) {
 					count++
 				}
