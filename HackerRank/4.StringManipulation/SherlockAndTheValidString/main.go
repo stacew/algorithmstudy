@@ -1,48 +1,54 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"io"
-	"os"
-	"strings"
+	"sort"
 )
 
-// Complete the isValid function below.
+//같은 회수로 나오면 유효한 문자열
+//단 한 문자만 고쳐서 가능하면 됨.
 func isValid(s string) string {
+	if len(s) < 3 {
+		return "YES"
+	}
 
+	cMap := make(map[byte]int)
+	for i := 0; i < len(s); i++ {
+		cMap[s[i]]++
+	}
+	cSlice := make([]int, 0, len(cMap))
+	for _, value := range cMap {
+		cSlice = append(cSlice, value)
+	}
+	sort.Sort(sort.IntSlice(cSlice))
+
+	var num int = cSlice[0]
+	var bChance bool = true
+	if cSlice[0] != cSlice[1] {
+		if cSlice[0] != 1 {
+			return "NO"
+		}
+		num = cSlice[1]
+		bChance = false
+	}
+	for i := 2; i < len(cSlice); i++ {
+		if num == cSlice[i] {
+			continue
+		}
+		if bChance == false {
+			return "NO"
+		}
+		bChance = false
+		if num+1 != cSlice[i] {
+			return "NO"
+		}
+	}
+	return "YES"
 }
 
 func main() {
-	reader := bufio.NewReaderSize(os.Stdin, 1024*1024)
-
-	stdout, err := os.Create(os.Getenv("OUTPUT_PATH"))
-	checkError(err)
-
-	defer stdout.Close()
-
-	writer := bufio.NewWriterSize(stdout, 1024*1024)
-
-	s := readLine(reader)
-
-	result := isValid(s)
-
-	fmt.Fprintf(writer, "%s\n", result)
-
-	writer.Flush()
-}
-
-func readLine(reader *bufio.Reader) string {
-	str, _, err := reader.ReadLine()
-	if err == io.EOF {
-		return ""
-	}
-
-	return strings.TrimRight(string(str), "\r\n")
-}
-
-func checkError(err error) {
-	if err != nil {
-		panic(err)
-	}
+	fmt.Println(isValid("aabbcd"))            //n
+	fmt.Println(isValid("abcdefghhgfedecba")) //yes
+	fmt.Println(isValid("aaaabbcc"))          //n
+	fmt.Println(isValid("aabbccddeefghi"))    //n
 }
