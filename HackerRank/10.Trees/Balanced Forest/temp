@@ -1,0 +1,296 @@
+package main
+
+import (
+	"bufio"
+	"fmt"
+	"io"
+	"math"
+	"os"
+	"sort"
+	"strconv"
+	"strings"
+)
+
+func debugPrint(s string) {
+	fmt.Print(s)
+}
+func debugPrintln(s string) {
+	fmt.Println(s)
+}
+
+type node struct {
+	value    int64
+	childMap map[int32]bool
+}
+
+func addChild(nodeArr []node, m1, m2 map[int32][]int32, used []bool, p, c int32) {
+	if used[p] && used[c] {
+		return
+	} else if used[c] {
+		p, c = c, p
+	}
+	nodeArr[p].childMap[c] = true
+	used[c] = true
+
+	if m1[c] != nil {
+		for i := 0; i < len(m1[c]); i++ {
+			addChild(nodeArr, m1, m2, used, c, m1[c][i])
+		}
+	}
+	if m2[c] != nil {
+		for i := 0; i < len(m2[c]); i++ {
+			addChild(nodeArr, m1, m2, used, c, m2[c][i])
+		}
+	}
+}
+func sumSubtree(nodeArr []node, a int32) int64 {
+	for key := range nodeArr[a].childMap {
+		nodeArr[a].value = nodeArr[a].value + sumSubtree(nodeArr, key)
+	}
+	return nodeArr[a].value
+}
+func makeParent(nodeArr []node, pmm map[int32]map[int32]bool, p int32) {
+	pmm[p] = make(map[int32]bool, len(nodeArr[p].childMap))
+	for kChild := range nodeArr[p].childMap {
+		pmm[p][kChild] = true
+		makeParent(nodeArr, pmm, kChild)
+	}
+}
+func getDiffIs2Equal(a, b, c int64) int32 {
+	if a == b {
+		if a > c {
+			return int32(a - c)
+		}
+	} else if a == c {
+		if a > b {
+			return int32(a - b)
+		}
+	} else if b == c {
+		if b > a {
+			return int32(b - a)
+		}
+	}
+	return -1
+}
+
+func isSubTree(pmm map[int32]map[int32]bool, a, b int32) bool {
+	if pmm[a][b] {
+		return true
+	}
+	return false
+}
+func sum3(nodeArr []node, pmm map[int32]map[int32]bool, a, b, c int32) int64 {
+	var ret int64
+	if isSubTree(pmm, b, c) {
+		ret = nodeArr[a].value - nodeArr[b].value + nodeArr[c].value
+	} else if isSubTree(pmm, c, b) {
+		ret = nodeArr[a].value - nodeArr[c].value + nodeArr[b].value
+	} else {
+		ret = nodeArr[a].value - nodeArr[b].value - nodeArr[c].value
+	}
+	return ret
+}
+func sum2(nodeArr []node, pmm map[int32]map[int32]bool, b, c int32) int64 {
+	var ret int64
+	if isSubTree(pmm, b, c) {
+		ret = nodeArr[b].value - nodeArr[c].value
+	} else {
+		ret = nodeArr[b].value
+	}
+	return ret
+}
+
+func balancedForest(c []int32, edges [][]int32) int32 {
+	//0. 준비
+	lenC := len(c)
+	lenC32 := int32(lenC)
+	lenEdges := len(edges)
+	//1. 인덱스화
+	for i := 0; i < lenEdges; i++ {
+		edges[i][0] = edges[i][0] - 1
+		edges[i][1] = edges[i][1] - 1
+	}
+	//트리 정보 생성
+	nodeArr := make([]node, lenC)
+	for i := 0; i < lenC; i++ {
+		nodeArr[i].value = int64(c[i])
+		nodeArr[i].childMap = make(map[int32]bool)
+	}
+	c = nil
+	debugPrint("1")
+	//1. 무조건 0을 루트로 쓰기 위해 정렬
+	for i := 0; i < lenEdges; i++ {
+		if edges[i][0] > edges[i][1] {
+			edges[i][0], edges[i][1] = edges[i][1], edges[i][0]
+		}
+	}
+
+	debugPrint("2")
+	//2. 무조건 0을 루트로 쓰기 위해 정렬2
+	sort.Slice(edges, func(a, b int) bool { //오름차순
+		return edges[a][0] < edges[b][0]
+	})
+
+	debugPrint("3")
+	//3. 엣지 방향 조정을 위해 맵 2개 처리
+	m1 := make(map[int32][]int32)
+	m2 := make(map[int32][]int32)
+	for i := 0; i < lenEdges; i++ {
+		m1[edges[i][0]] = append(m1[edges[i][0]], edges[i][1])
+		m2[edges[i][1]] = append(m2[edges[i][1]], edges[i][0])
+	}
+	edges = nil //하위도 nil해야되나..?? 나중에 Check
+
+	debugPrint("4")
+	//4. 트리 정보 생성
+	used := make([]bool, lenC) //자식 노드는 또 자식으로 되지 않도록..
+	used[0] = true
+	for i := 0; i < len(m1[0]); i++ {
+		addChild(nodeArr, m1, m2, used, 0, m1[0][i])
+	}
+	for i := 0; i < len(m2[0]); i++ {
+		addChild(nodeArr, m1, m2, used, 0, m2[0][i])
+	}
+	m1 = nil
+	m2 = nil
+
+	debugPrint("5")
+	//5. 하위트리 계산
+	sumSubtree(nodeArr, 0)
+
+	debugPrint("6")
+	//6. 부모 정보맵 생성
+	pmm := make(map[int32]map[int32]bool)
+	makeParent(nodeArr, pmm, 0)
+
+	debugPrint("7")
+	//7.
+
+	debugPrint("8")
+	//8. 계산
+	var min int32 = math.MaxInt32
+	for i := int32(1); i < lenC32; i++ {
+		a := nodeArr[0].value - nodeArr[i].value
+		b := nodeArr[i].value
+		for j := i + 1; j < lenC32; j++ {
+			if a > b {
+				if isSubTree(pmm, i, j){
+					continue
+				}
+			}else if a < b{
+				if isSubTree(pmm, i, j){
+					continue
+				}
+			}else{ //a==b
+				continue
+			}
+
+			c := sum3(nodeArr, pmm, 0, i, j)
+			temp := getDiffIs2Equal(a, b, c)
+			if temp >= 0 {
+				min = 1
+			}
+		}
+	}
+
+	debugPrintln("8")
+	//8. 결과
+	if min == math.MaxInt32 {
+		return -1
+	}
+	return min
+}
+
+func main() {
+	// 1357940809
+	// 397705399909
+	// 439044899265
+	// 104805614260
+	// -1
+	file, _ := os.Open("test.txt")
+	defer file.Close()
+
+	reader := bufio.NewReaderSize(file, 1024*1024)
+	q, _ := strconv.ParseInt(readLine(reader), 10, 64)
+
+	for qItr := 0; qItr < int(q); qItr++ {
+
+		nTemp, err := strconv.ParseInt(readLine(reader), 10, 64)
+		checkError(err)
+		n := int32(nTemp)
+
+		cTemp := strings.Split(readLine(reader), " ")
+
+		var c []int32
+		for i := 0; i < int(n); i++ {
+			cItemTemp, err := strconv.ParseInt(cTemp[i], 10, 64)
+			checkError(err)
+			cItem := int32(cItemTemp)
+			c = append(c, cItem)
+		}
+
+		var edges [][]int32
+		for i := 0; i < int(n)-1; i++ {
+
+			edgesRowTemp := strings.Split(readLine(reader), " ")
+
+			var edgesRow []int32
+			for _, edgesRowItem := range edgesRowTemp {
+				edgesItemTemp, err := strconv.ParseInt(edgesRowItem, 10, 64)
+				checkError(err)
+				edgesItem := int32(edgesItemTemp)
+				edgesRow = append(edgesRow, edgesItem)
+			}
+
+			if len(edgesRow) != 2 {
+				panic("Bad input")
+			}
+
+			edges = append(edges, edgesRow)
+		}
+
+		result := balancedForest(c, edges)
+
+		fmt.Println(result)
+	}
+}
+
+func readLine(reader *bufio.Reader) string {
+	str, _, err := reader.ReadLine()
+	if err == io.EOF {
+		return ""
+	}
+
+	return strings.TrimRight(string(str), "\r\n")
+}
+
+func checkError(err error) {
+	if err != nil {
+		panic(err)
+	}
+}
+
+func main() {
+	//2
+	fmt.Println(balancedForest([]int32{1, 2, 2, 1, 1}, [][]int32{
+		{1, 2},
+		{1, 3},
+		{3, 5},
+		{1, 4}}))
+	//10
+	fmt.Println(balancedForest([]int32{1, 1, 1, 18, 10, 11, 5, 6}, [][]int32{
+		{1, 2},
+		{1, 4},
+		{2, 3},
+		{1, 8},
+		{8, 7},
+		{7, 6},
+		{5, 7}}))
+	//13
+	fmt.Println(balancedForest([]int32{12, 7, 11, 17, 20, 10}, [][]int32{
+		{1, 2},
+		{2, 3},
+		{4, 5},
+		{6, 5},
+		{1, 4}}))
+}
