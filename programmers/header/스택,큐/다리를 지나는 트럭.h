@@ -1,6 +1,6 @@
 #pragma once
 //https://programmers.co.kr/learn/courses/30/lessons/42583
-
+//queue< pair < int, int > >, vector
 //queue
 int solution(int bridge_length, int weight, vector<int> truck_weights) {
 	int cur_time = 0;
