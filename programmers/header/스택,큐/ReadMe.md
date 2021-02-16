@@ -4,5 +4,8 @@
 https://programmers.co.kr/learn/courses/30/lessons/42583  
 queue< pair < int, int > >, vector
 
-## test2
+## 주식가격
+https://programmers.co.kr/learn/courses/30/lessons/42584  
+pq( pair, auto compare(greater top) lambda decltype )
+todo stack 
 
