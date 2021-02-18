@@ -3,7 +3,7 @@
 //stack ( 인덱스 = 시간, pair 사용이 좋아보이지만 동일 값 )
 //stack에서 pop 할 때, 차이로 얻을 수 있는 부분과 무조건 vector의 _back() 뒷 삽입이 아닌 점에 대해서도 생각이 필요.
 
-//pq(pair, auto compare(greater top) lambda decltype)
+//pq(pair, auto compare( (greater top), lambda, decltype )
 vector<int> solution(vector<int> prices) {
 	vector<int> answer;
 	answer.resize(prices.size());
