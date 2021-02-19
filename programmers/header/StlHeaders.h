@@ -1,11 +1,16 @@
 #pragma once
+#include <iostream>
+#include <string>
+#include <memory>		//unique_ptr, make_unique
+
 #include <map>
 #include <set>
-#include <queue>		//priority_queue
-#include <stack>
 
 #include <unordered_map>
 #include <unordered_set>
+
+#include <queue>		//priority_queue
+#include <stack>
 
 #include <list>
 #include <vector>
@@ -17,9 +22,7 @@
 #include <numeric>		//accumulate, Multiplies, partial_sum. adjacent_difference
 
 #include <limits>		//numeric_limits
-#include <functional>
+#include <functional>	//multiplies
 
-#include <iostream>
-#include <string>
-#include <memory>		//unique_ptr, make_unique
+
 using namespace std;
