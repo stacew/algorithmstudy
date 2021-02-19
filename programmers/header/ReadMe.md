@@ -16,7 +16,10 @@
 - stack ( 인덱스 = 시간, pair 사용이 좋아보이지만 동일 값 )
 	- stack에서 pop 할 때, 차이로 얻을 수 있는 부분과 무조건 vector의 _back() 뒷 삽입이 아닌 점에 대해서도 생각이 필요
 - pq(pair, auto compare( (greater top), lambda, decltype )
-
+- 기능개발 https://programmers.co.kr/learn/courses/30/lessons/42586
+- q pair 넣는 방법 외에 미리 필요한 day를 계산해서 넣는 방식
+- 프린터 https://programmers.co.kr/learn/courses/30/lessons/42587
+- pq, q, pair
 ## 완전탐색
 모의고사 https://programmers.co.kr/learn/courses/30/lessons/42840
 - auto, iterator 전위, 후위 증가 확인

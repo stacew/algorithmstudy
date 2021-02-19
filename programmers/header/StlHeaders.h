@@ -17,7 +17,7 @@
 #include <array>
 #include <bitset>
 
-#include <algorithm>	//sort, partial_sort, next_permutation
+#include <algorithm>	//sort, partial_sort, next_permutation, max_element
 #include <cmath>		//pow, sqrt, abs, log, sin, cos, tan
 #include <numeric>		//accumulate, Multiplies, partial_sum. adjacent_difference
 
