@@ -1,6 +1,7 @@
-
 ## 그래프
-
+- 가장 먼 노드 https://programmers.co.kr/learn/courses/30/lessons/49189
+- graph(unordered_map<int, unordered_set<int>>)
+	- 가장 멀리 있는 노드 카운트 bfs queue 
 
 ## 깊이,너비 우선 탐색(DFS,BFS)
 - 타겟 넘버 https://programmers.co.kr/learn/courses/30/lessons/43165
@@ -23,7 +24,14 @@
 - next_permutation
 	- queue(bfs), uset, checkPrime
 	- fail: queue(bfs), stack(dfs)
+	
+- 카펫 https://programmers.co.kr/learn/courses/30/lessons/42842
+- 조합 계산
+
 ## 이분탐색
+- https://programmers.co.kr/learn/courses/30/lessons/43238
+- 최소 value와 최대 value를 계속 테스트 해보면서 가능할 지 체크 하는 이분 탐색
+- gcd 최대 공약수, lcm 최소 공배수 //std c++17
 
 ## 정렬
 - H-Index https://programmers.co.kr/learn/courses/30/lessons/42747
@@ -42,6 +50,9 @@
 - 전화번호 목록 https://programmers.co.kr/learn/courses/30/lessons/42577
 - custom hasher, equal
 - sort, string compare(== substr)
+- 위장 https://programmers.co.kr/learn/courses/30/lessons/42578
+- umap, uset
+- 조합 accumulate, multiplies<int>()
 
 ## 힙(Heap)
 - 더 맵게 https://programmers.co.kr/learn/courses/30/lessons/42626
