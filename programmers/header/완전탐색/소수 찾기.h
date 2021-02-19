@@ -1,6 +1,7 @@
 #pragma once
 //https://programmers.co.kr/learn/courses/30/lessons/42839
-
+//next_permutation, queue(bfs), uset, checkPrime
+//fail: queue(bfs), stack(dfs)
 
 int solution(string numbers) {
 	int answer = 0;
