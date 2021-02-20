@@ -2,6 +2,10 @@
 - 가장 먼 노드 https://programmers.co.kr/learn/courses/30/lessons/49189
 - graph(unordered_map<int, unordered_set<int>>)
 	- 가장 멀리 있는 노드 카운트 bfs queue 
+- 순위 https://programmers.co.kr/learn/courses/30/lessons/49191
+- 순위를 알려면 탐색 시, 전체적인 연결이 필요, 승리 방향을 바꿔서 양쪽 다 탐색 count를 확인.
+- unordered_map< int unordered_set >그래프
+- dfs( stack , visited )
 
 ## 깊이,너비 우선 탐색(DFS,BFS)
 - 타겟 넘버 https://programmers.co.kr/learn/courses/30/lessons/43165
@@ -46,7 +50,16 @@
 ## 탐욕법(Greedy)
 - 체육복 https://programmers.co.kr/learn/courses/30/lessons/42862
 - 그리드 : 현재 상황에서만 최적의 해를 구하기..
-
+- 구명보트 https://programmers.co.kr/learn/courses/30/lessons/42885
+- iterator 비교, 인덱스가 더 보기 쉬움.
+- 조이스틱 https://programmers.co.kr/learn/courses/30/lessons/42860
+- 단순히 양 옆만 보고 이동
+- todo 알파벳은 어차피 전부 answer에 합쳐지니까 추가 계산이나 array가 필요없음, 좌우 이동만 A가 아닌지 확인하면 됨.
+- 큰 수 만들기 https://programmers.co.kr/learn/courses/30/lessons/42883
+- max_element(begin, end)
+- string.erase(begin, end)
+- distance(begin, end);//end - begin
+- string <=> num ( stoi(), to_string() )
 ## 해시
 - 완주하지 못한 선수 https://programmers.co.kr/learn/courses/30/lessons/42576
 - hash counting. forRange hash, ( other. sort 후 앞, 뒤 비교 )
@@ -56,7 +69,10 @@
 - 위장 https://programmers.co.kr/learn/courses/30/lessons/42578
 - umap, uset
 - 조합 accumulate, multiplies<int>()
-
+- 베스트앨범 https://programmers.co.kr/learn/courses/30/lessons/42579
+- pair 보다 정보는 구조체 쓰는게 더 편하고 빠른 구현 되는 듯. pair 쓰지 말기..
+- vector 구조체 push_back { }
+- priority_queue 쓸 때, sort로 바꿀 생각 하기.
 ## 힙(Heap)
 - 더 맵게 https://programmers.co.kr/learn/courses/30/lessons/42626
 - stl pq( =heap ), in-place sort ( small top = greater ), include <queue>
