@@ -1,12 +1,12 @@
 #pragma once
 #if 0
 https://programmers.co.kr/learn/courses/30/lessons/42628
-- multiset 최소, 최대 구하기가 더 쉬웠음.
+multiset 최소, 최대 구하기가 더 쉬웠음.
 성능 테스트 결과(다양한 데이터 테스트 X)
-- solution : solution_pqpquMap = 5(3052ms~15062ms) : 4(2404ms~11812ms)
-- pqpqMap이 약간 빠름
-- 메모리는 pqpqMap이 좀 더 많음.Delete 없이 Insert만 해도 비례로 차이날 듯.
-- 결론 : 코드 복잡해지면 multiset 사용 고려!
+solution : solution_pqpquMap = 5(3052ms~15062ms) : 4(2404ms~11812ms)
+pqpqMap이 약간 빠름
+메모리는 pqpqMap이 좀 더 많음.Delete 없이 Insert만 해도 비례로 차이날 듯.
+결론 : 코드 복잡해지면 multiset 사용 고려!
 #endif
 
 vector<int> solution(const vector<string>&operations) {
