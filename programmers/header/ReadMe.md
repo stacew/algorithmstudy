@@ -10,6 +10,12 @@
 ## 깊이,너비 우선 탐색(DFS,BFS)
 - 타겟 넘버 https://programmers.co.kr/learn/courses/30/lessons/43165
 - Queue BFS
+- 네트워크 https://programmers.co.kr/learn/courses/30/lessons/43162
+- 따로 그래프 정보를 담아둘 필요는 없었음.
+- queue bfs, visited
+- 단어 변환 https://programmers.co.kr/learn/courses/30/lessons/43163
+- bfs(queue) 최소 도착 리턴
+- visited(unordered_set)
 
 ## 동적계획법(Dynamic Programming)
 
