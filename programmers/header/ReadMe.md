@@ -16,7 +16,8 @@
 - 단어 변환 https://programmers.co.kr/learn/courses/30/lessons/43163
 - bfs(queue) 최소 도착 리턴
 - visited(unordered_set)
-
+- 여행경로 https://programmers.co.kr/learn/courses/30/lessons/43164
+- BackTrace recursion없이 Stack으로 풀기, Copy 필요 조건을 확실히 알기..
 ## 동적계획법(Dynamic Programming)
 
 ## 스택, 큐

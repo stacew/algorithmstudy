@@ -6,9 +6,9 @@
 #endif
 
 //#include "header/깊이,너비 우선 탐색(DFS,BFS)/네트워크.h"
-#include "header/깊이,너비 우선 탐색(DFS,BFS)/단어 변환.h"
+//#include "header/깊이,너비 우선 탐색(DFS,BFS)/단어 변환.h"
+//#include "header/깊이,너비 우선 탐색(DFS,BFS)/여행경로.h"
 #if 0
-#include "header/깊이,너비 우선 탐색(DFS,BFS)/여행경로.h"
 #include "header/탐욕법(Greedy)/섬 연결하기.h"
 #include "header/탐욕법(Greedy)/단속카메라.h"
 #include "header/동적계획법(Dynamic Programming)/N으로 표현.h"
@@ -22,6 +22,31 @@
 int main()
 {
 #if 1
+
+
+	for (const auto& n : solution({ {"I", "B"},		{"B", "I"},		{"I", "A"},		{"A", "D"},		{"D", "A"} }))
+		cout << n << " , ";//I , B , I , A , D , A ,
+
+	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
+	for (const auto& n : solution({ {"ICN", "SFO"},		{"ICN", "ATL"},		{"SFO", "ATL"},		{"ATL", "ICN"},		{"ATL", "SFO"} }))
+		cout << n << " , ";//ICN , ATL , ICN , SFO , ATL , SFO ,
+
+	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
+	for (const auto& n : solution({ {"ICN", "A"}, {"ICN", "B"}, {"B", "ICN"} }))
+		cout << n << " , ";//{ICN, B, ICN, A}
+
+	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
+	for (const auto& n : solution({ {"ICN", "A"}, {"ICN", "A"}, {"A", "ICN"}, {"A", "C"} }))
+		cout << n << " , ";//{ICN, A, ICN, A, C}
+
+	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
+	for (const auto& n : solution({ {"ICN", "A"}, { "ICN", "B" }, { "B", "ICN" }}))
+		cout << n << " , ";//[ICN, B, ICN, A]
+
+#endif
+
+
+#if 0
 	solution("hit", "cog", { "hot", "dot", "dog", "lot", "log", "cog" });
 #endif
 #if 0
