@@ -68,6 +68,24 @@
 - string.erase(begin, end)
 - distance(begin, end);//end - begin
 - string <=> num ( stoi(), to_string() )
+- 섬 연결하기 https://programmers.co.kr/learn/courses/30/lessons/42861
+- 최소 신장 트리(MST : minimum spanning tree) 알고리즘
+- looping(cycle)이 없도록 모든 정점(Vertex)을 연결하는 트리, 최소 간선(Edge)의 합
+
+- 크러스컬(kruskal) O(Edge log Vertex) : Edge가 적으면 kruskal
+- 1. 최소 간선 비용 오름차순 정렬
+- 2. 가장 적은 비용이 드는 간선 선택.
+- 3. 사이클이 발생하지 않는지 두 노드(각각 Group Find)가 다르면, 한 방향으로 Group 정해 줌(Group Union)
+- 4. 모든 간선을 처리할 때까지(2, 3) 반복
+- Find 최적화 : 부모 Group 기록
+- Union 최적화 : Rank 처리, 작은 Rank 그룹이 큰 Rank 그룹을 가리키도록
+
+- 프림(prim) : Edge가 많으면 prim
+- wiki : 힙을 이용해 구현할 경우 O(Edge log Vertex)의 시간복잡도를 가진다.
+- 그래프가 충분히 빽빽한 경우(E = V log V) 피보나치 힙을 이용하여 훨씬 빠르게 구현할 수 있다.O(Edge + Vetex log Vertex)
+- 1. 임의의 정점 방문
+- 2. 방문 집합에서(방문 집합을 제외한) 최소 간선 비용을 선택하고, 해당 정점 방문 집합에 포함.
+- 3. 방문 집합이 다 찰 때까지(2) 반복
 
 ## 해시
 - 완주하지 못한 선수 https://programmers.co.kr/learn/courses/30/lessons/42576

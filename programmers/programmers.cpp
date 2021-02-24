@@ -1,4 +1,6 @@
 ﻿#include "header/StlHeaders.h"
+
+
 #if 0
 1. 해시, dfs / bfs, 정렬, 완전탐색
 2. 스택 / 큐, 힙
@@ -8,8 +10,9 @@
 //#include "header/깊이,너비 우선 탐색(DFS,BFS)/네트워크.h"
 //#include "header/깊이,너비 우선 탐색(DFS,BFS)/단어 변환.h"
 //#include "header/깊이,너비 우선 탐색(DFS,BFS)/여행경로.h"
-#if 0
 #include "header/탐욕법(Greedy)/섬 연결하기.h"
+#if 0
+
 #include "header/탐욕법(Greedy)/단속카메라.h"
 #include "header/동적계획법(Dynamic Programming)/N으로 표현.h"
 #include "header/동적계획법(Dynamic Programming)/정수 삼각형.h"
@@ -21,27 +24,53 @@
 
 int main()
 {
-#if 1
+	cout << solution(4, { {0, 1, 1}, {0, 2, 2}, {1, 2, 3}, {1, 3, 4}, {2, 3, 5} });
+	//output : 7
+	cout << endl;
 
+	cout << solution(5, { {0, 1, 1}, {3, 4, 1}, {1, 2, 2}, {2, 3, 4} });
+	//output : 8
+	cout << endl;
 
+	cout << solution(4, { {0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 1}, {2, 3, 8} });
+	//output: 4
+	cout << endl;
+
+	cout << solution(6, { {0, 1, 5}, {0, 3, 2}, {0, 4, 3}, {1, 4, 1}, {3, 4, 10}, {1, 2, 2}, {2, 5, 3}, {4, 5, 4} });
+	//output: 11
+	cout << endl;
+
+	cout << solution(4, { {0, 1, 5}, {1, 2, 3}, {2, 3, 3}, {3, 1, 2}, {3, 0, 4} });
+	//output : 9
+	cout << endl;
+
+	cout << solution(5, { {0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 3}, {2, 3, 8}, {3, 4, 1} });
+	//output : 7
+	cout << endl;
+
+	cout << solution(4, { {0, 1, 3}, {0, 2, 4}, {1, 2, 7}, {1, 3, 3}, {2, 3, 10} });
+	//output : 10
+	cout << endl;
+
+#if 0
 	for (const auto& n : solution({ {"I", "B"},		{"B", "I"},		{"I", "A"},		{"A", "D"},		{"D", "A"} }))
 		cout << n << " , ";//I , B , I , A , D , A ,
 
-	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
+	cout << endl << "--------------" << endl;
 	for (const auto& n : solution({ {"ICN", "SFO"},		{"ICN", "ATL"},		{"SFO", "ATL"},		{"ATL", "ICN"},		{"ATL", "SFO"} }))
 		cout << n << " , ";//ICN , ATL , ICN , SFO , ATL , SFO ,
 
-	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
+	cout << endl << "--------------" << endl;
 	for (const auto& n : solution({ {"ICN", "A"}, {"ICN", "B"}, {"B", "ICN"} }))
 		cout << n << " , ";//{ICN, B, ICN, A}
 
-	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
-	for (const auto& n : solution({ {"ICN", "A"}, {"ICN", "A"}, {"A", "ICN"}, {"A", "C"} }))
+	cout << endl << "--------------" << endl;
+	for (const auto& n : solution({ {"A", "C"} , {"ICN", "A"}, {"ICN", "A"}, {"A", "ICN"}, }))
 		cout << n << " , ";//{ICN, A, ICN, A, C}
 
-	cout << endl << "mmmmmmmmmmmmmmmmmmmmmmm" << endl;
-	for (const auto& n : solution({ {"ICN", "A"}, { "ICN", "B" }, { "B", "ICN" }}))
-		cout << n << " , ";//[ICN, B, ICN, A]
+	cout << endl << "--------------" << endl;
+	for (const auto& n : solution({ {"ICN", "A"}, { "ICN", "B" }, { "B", "ICN" } }))
+		cout << n << " , ";//{ICN, B, ICN, A}
 
 #endif
 

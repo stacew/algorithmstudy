@@ -18,11 +18,11 @@
 #include <bitset>
 
 #include <algorithm>	//sort, partial_sort, next_permutation, max_element
-#include <cmath>		//pow, sqrt, abs, log, sin, cos, tan
+#include <cmath>		//max/min, abs, pow, sqrt(root), log, sin, cos, tan
 #include <numeric>		//accumulate, Multiplies, partial_sum. adjacent_difference
 
 #include <limits>		//numeric_limits
-#include <functional>	//multiplies
+#include <functional>	//multiplies, function
 
 
 using namespace std;
