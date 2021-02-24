@@ -6,9 +6,9 @@ looping(cycle)이 없도록 모든 정점(Vertex)을 연결하는 트리, 최소 간선(Edge)의 합
 
 크러스컬(kruskal) O(Edge log Vertex) : Edge가 적으면 kruskal
 1. 최소 간선 비용 오름차순 정렬
-2. 가장 적은 비용이 드는 간선 선택.
-3. 사이클이 발생하지 않는지 두 노드(각각 Group Find)가 다르면, 한 방향으로 Group 정해 줌(Group Union)
-4. 모든 간선을 처리할 때까지(2, 3) 반복
+2. 낮은 간선부터 두 노드(Group Find)의 부모 Group을 확인하여 같으면 Skip(Cycle)
+3. 다르다면 한 부모 Group이 다른 부모 Group을 가리켜서 Group을 합침(Union)
+4. 모든 간선을 처리할 때까지(2, 3) 반복, ( 정점 visit로 체크 하면 연결이 안 되는 경우 존재 )
 Find 최적화 : 부모 Group 기록
 Union 최적화 : Rank 처리, 작은 Rank 그룹이 큰 Rank 그룹을 가리키도록
 
@@ -26,8 +26,7 @@ wiki : 힙을 이용해 구현할 경우 O(Edge log Vertex)의 시간복잡도를 가진다.
 //kruskal
 int solution(int n, vector<vector<int>> costs) {
 
-	sort(costs.begin(), costs.end(),
-		[](const vector<int>& l, const vector<int>& r) {return l[2] < r[2]; });//1
+	sort(costs.begin(), costs.end(), [](const vector<int>& l, const vector<int>& r) {return l[2] < r[2]; });//1.
 
 	vector< int > group(n); // node : 0 ~ n-1 사용
 	for (int node = 1; node < group.size(); node++)
@@ -42,13 +41,13 @@ int solution(int n, vector<vector<int>> costs) {
 		//기본 return fFind(pa[node]);
 	};
 
-	vector< int > rank(n); //Rank 최적화용 : 0 초기화
 
-						   //union
+	//union
+	vector< int > rank(n); //Rank 최적화용 : 0 초기화
 	auto fUnionFind = [&](int node1, int node2) {
 		int smallGroup = fFind(node1);
 		int largeGroup = fFind(node2);
-		if (smallGroup == largeGroup) //부모가 같으면 합치면 안 됨.
+		if (smallGroup == largeGroup) //2.
 			return false;
 
 		//Rank 최적화 : 작은 그룹이 큰 그룹을 가리키는게 좋다.
@@ -57,12 +56,12 @@ int solution(int n, vector<vector<int>> costs) {
 		else if (rank[smallGroup] == rank[largeGroup]) //large 미리 증가
 			rank[largeGroup]++;
 
-		group[smallGroup] = largeGroup; // Union
+		group[smallGroup] = largeGroup; //3.
 		return true;
 	};
 
 	int answer = 0;
-	for (int i = 0; i < costs.size(); i++) { //간선을 다 확인해야 함. 정점으로 체크 불가.
+	for (int i = 0; i < costs.size(); i++) { //4.
 		if (fUnionFind(costs[i][0], costs[i][1]))
 			answer += costs[i][2]; //cost
 	}
@@ -116,10 +115,10 @@ int solution_prim(int n, vector<vector<int>> costs) {
 		visitSet.insert(minNumDist.num); //해당 정점 방문 집합에 포함.
 	};
 
-	visitSet.insert(nndMap.begin()->first); //1
+	visitSet.insert(nndMap.begin()->first); //1.
 
-	while (visitSet.size() != n) //3 ( V - 1 번 )	
-		fMinVertexFind(); //2
+	while (visitSet.size() != n) //3. ( V - 1 번 )	
+		fMinVertexFind(); //2.
 
 	return answer;
 }

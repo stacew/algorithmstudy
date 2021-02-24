@@ -74,9 +74,9 @@
 
 - 크러스컬(kruskal) O(Edge log Vertex) : Edge가 적으면 kruskal
 - 1. 최소 간선 비용 오름차순 정렬
-- 2. 가장 적은 비용이 드는 간선 선택.
-- 3. 사이클이 발생하지 않는지 두 노드(각각 Group Find)가 다르면, 한 방향으로 Group 정해 줌(Group Union)
-- 4. 모든 간선을 처리할 때까지(2, 3) 반복
+- 2. 낮은 간선부터 두 노드(Group Find)의 부모 Group을 확인하여 같으면 Skip(Cycle)
+- 3. 다르다면 한 부모 Group이 다른 부모 Group을 가리켜서 Group을 합침(Union)
+- 4. 모든 간선을 처리할 때까지(2, 3) 반복, ( 정점 visit로 체크 하면 연결이 안 되는 경우 존재 )
 - Find 최적화 : 부모 Group 기록
 - Union 최적화 : Rank 처리, 작은 Rank 그룹이 큰 Rank 그룹을 가리키도록
 
