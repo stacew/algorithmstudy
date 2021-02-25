@@ -43,3 +43,7 @@ int solution(string begin, string target, vector<string> words) {
 	}
 	return 0;
 }
+
+#if 0
+solution("hit", "cog", { "hot", "dot", "dog", "lot", "log", "cog" });
+#endif

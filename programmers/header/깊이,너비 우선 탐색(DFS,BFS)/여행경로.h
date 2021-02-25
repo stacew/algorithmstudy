@@ -49,3 +49,21 @@ vector<string> solution(vector<vector<string>> tickets) {
 
 	return answer;
 }
+
+#if 0 
+cout << endl << "--------------" << endl;
+for (const auto& n : solution({ {"ICN", "SFO"},		{"ICN", "ATL"},		{"SFO", "ATL"},		{"ATL", "ICN"},		{"ATL", "SFO"} }))
+cout << n << " , ";//ICN , ATL , ICN , SFO , ATL , SFO ,
+
+cout << endl << "--------------" << endl;
+for (const auto& n : solution({ {"ICN", "A"}, {"ICN", "B"}, {"B", "ICN"} }))
+cout << n << " , ";//{ICN, B, ICN, A}
+
+cout << endl << "--------------" << endl;
+for (const auto& n : solution({ {"A", "C"} , {"ICN", "A"}, {"ICN", "A"}, {"A", "ICN"}, }))
+cout << n << " , ";//{ICN, A, ICN, A, C}
+
+cout << endl << "--------------" << endl;
+for (const auto& n : solution({ {"ICN", "A"}, { "ICN", "B" }, { "B", "ICN" } }))
+cout << n << " , ";//{ICN, B, ICN, A}
+#endif

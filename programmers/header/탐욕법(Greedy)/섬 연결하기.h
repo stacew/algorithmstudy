@@ -33,7 +33,7 @@ int solution(int n, vector<vector<int>> costs) {
 		group[node] = node;
 
 	//find
-	function<int(int)> fFind = [&](int node)->int {
+	function<int(int)> fFind = [&](int node) {
 		if (node == group[node])
 			return group[node];
 
@@ -77,14 +77,21 @@ struct myCompair.. operator() 를 operarot로 적어서 빌드에러..;
 //pq를 밸류로 넣을 때 빌드 하는 법이...
 auto myPairGreater = [](const pair< int, int >& l, const pair< int, int >& r) { return l.second > r.second; };
 using myPQ = priority_queue< pair< int, int>, vector< pair< int, int > >, decltype(myPairGreater) >;
-unordered_map<int, myPQ> dist;
 #endif
 
 //prim
-struct myNumDist { int num;	int dist; };
-struct myNumDistGreater { bool operator()(const myNumDist& l, const  myNumDist& r) { return l.dist > r.dist; } };
-using myPQ = priority_queue< myNumDist, vector< myNumDist >, myNumDistGreater >;
 int solution_prim(int n, vector<vector<int>> costs) {
+#if 1
+	struct myNumDist { int num;	int dist; };
+	struct myNumDistGreater { bool operator()(const myNumDist& l, const  myNumDist& r) { return l.dist > r.dist; } };
+	using myPQ = priority_queue< myNumDist, vector< myNumDist >, myNumDistGreater >;
+#else //빌드는 되더라도 런타임 crash
+	using myNumDist = pair<int, int>;
+#define num first
+#define dist second
+	function<bool(const myNumDist, const myNumDist)> myNumDistGreater = [](const myNumDist& l, const myNumDist& r) { return l.dist > r.dist; };
+	using myPQ = priority_queue< myNumDist, vector< myNumDist >, decltype(myNumDistGreater)>;
+#endif	
 	unordered_map<int, myPQ> nndMap;
 	unordered_set<int> visitSet;
 	for (const auto& cost : costs) {
@@ -122,3 +129,33 @@ int solution_prim(int n, vector<vector<int>> costs) {
 
 	return answer;
 }
+
+#if 0
+cout << solution(4, { {0, 1, 1}, {0, 2, 2}, {1, 2, 3}, {1, 3, 4}, {2, 3, 5} });
+//output : 7
+cout << endl;
+
+cout << solution(5, { {0, 1, 1}, {3, 4, 1}, {1, 2, 2}, {2, 3, 4} });
+//output : 8
+cout << endl;
+
+cout << solution(4, { {0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 1}, {2, 3, 8} });
+//output: 4
+cout << endl;
+
+cout << solution(6, { {0, 1, 5}, {0, 3, 2}, {0, 4, 3}, {1, 4, 1}, {3, 4, 10}, {1, 2, 2}, {2, 5, 3}, {4, 5, 4} });
+//output: 11
+cout << endl;
+
+cout << solution(4, { {0, 1, 5}, {1, 2, 3}, {2, 3, 3}, {3, 1, 2}, {3, 0, 4} });
+//output : 9
+cout << endl;
+
+cout << solution(5, { {0, 1, 1}, {0, 2, 2}, {1, 2, 5}, {1, 3, 3}, {2, 3, 8}, {3, 4, 1} });
+//output : 7
+cout << endl;
+
+cout << solution(4, { {0, 1, 3}, {0, 2, 4}, {1, 2, 7}, {1, 3, 3}, {2, 3, 10} });
+//output : 10
+cout << endl;
+#endif

@@ -23,3 +23,12 @@ int solution(vector<vector<string>> clothes) {
 
 	return accumulate(typeCounter.begin(), typeCounter.end(), 1, multiplies<int>()) - 1;
 }
+
+#if 0
+vector<vector<string>> vvs1 = { {"yellow_hat", "headgear"}, {"blue_sunglasses", "eyewear"}, {"green_turban", "headgear"} };//5
+cout << solution(vvs1) << endl;
+vector<vector<string>> vvs2 = { {"crow_mask", "face"}, {"blue_sunglasses", "face"}, {"smoky_makeup", "face"} };//3
+cout << solution(vvs2) << endl;
+vector<vector<string>> vvs3 = { {"crow_mask", "face"} };
+cout << solution(vvs3) << endl;
+#endif
