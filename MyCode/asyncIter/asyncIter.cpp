@@ -1,10 +1,12 @@
-#include <iostream>
 #include <array>
 #include <future>
-class ExampleData {
-	int data;
-};
-
+#define TEST_CODE 1
+#if TEST_CODE
+#include <chrono>
+#include <thread>
+using std::this_thread::sleep_for;
+//sleep_for(std::chrono::milliseconds(30));
+#endif
 class SpinLock {
 public:
 	void WaitAndLock() {
@@ -17,149 +19,153 @@ private:
 	std::atomic_flag m_SpinLock = ATOMIC_FLAG_INIT;
 };
 
-#define TEST_CODE 1
 class ASyncIterator {
+#if TEST_CODE
+public:
+	int m_nTestCounter;
 private:
-	class LockedData :public SpinLock {
-	public:
-		enum class eState : char {
-			None,
-			Writed,
-			Exit,
-		};
-
-		eState m_eState;
-
-		int m_nPos;
-		ExampleData m_Ex;
+	static constexpr int TEST_ITER_ARRAY_COUNT = 10000;
+#endif
+private:
+	struct apiData {
+		std::string dummy;
 	};
 
-	static constexpr int ASYNC_ITER_Q_SIZE = 1000;
-	static constexpr int TEST_ITER_ARRAY_COUNT = 10000;
+	struct lockedData :public SpinLock {
+		enum class eState : uint8_t { init, writed, exit, } m_eState;
+		apiData d;
+	};
+
+	static constexpr int ASYNC_ITER_Q_SIZE = 10000;
+	using arrayForCircular = std::array< lockedData, ASYNC_ITER_Q_SIZE >;
 
 private:
+	//1
 	int m_nStart;
 	int m_nEnd;
-
-	int m_nIterPos;
-	ExampleData m_Ex;
-
-#if TEST_CODE
-private:
-	int m_nTestCounter;
-public:
-	int GetTestCount() { return m_nTestCounter; }
-#endif
+	//2
+	int m_nProgress;
+	apiData m_dummyData;
 
 public:
-	std::array< LockedData, ASYNC_ITER_Q_SIZE > m_q;
-	int qPos;
-	int userPos;
+	arrayForCircular dataQ;
+	arrayForCircular::iterator qIter;
+	arrayForCircular::iterator userIter;
 	std::future< void > m_future;
 
 	ASyncIterator() {
 #if TEST_CODE
 		m_nTestCounter = 0;
 #endif
+
 		m_nStart = 0;
 		m_nEnd = TEST_ITER_ARRAY_COUNT - 1;
 
+		m_nProgress = m_nStart - 1;
 
-		m_nIterPos = m_nStart - 1;
-
-
-		//동기화 처리
-		userPos = ASYNC_ITER_Q_SIZE - 1;        // fixed : ASYNC_ITER_Q_SIZE - 1
-		qPos = 0;                    // fixed : 0  
-		m_future = std::async([&]() { asyncFillQ(); });  //std::launch::async,
+		//async
+		for (auto& d : dataQ)
+			d.m_eState = lockedData::eState::init;
+		qIter = dataQ.begin();								// fixed
+		userIter = prevCircular(dataQ.end());				// fixed
+		userIter->WaitAndLock();
+		m_future = std::async(std::launch::async, [&]() { asyncFillQ(); });
 	}
 
 
 	bool HasNext() {
-		m_q[userPos].Unlock();
-		userPos = nextPos(userPos); // ++
+		userIter->Unlock();
+		IterCircularPlusPlus(userIter); // ++
 
 		while (true) {
-			m_q[userPos].WaitAndLock();
-			LockedData::eState check = m_q[userPos].m_eState;
-			m_q[userPos].Unlock();
+			userIter->WaitAndLock();
+			lockedData::eState check = userIter->m_eState;
+			userIter->Unlock();
 
-			if (check == LockedData::eState::None)
-				continue;
-			else if (check == LockedData::eState::Writed)
+			if (check == lockedData::eState::writed)
 				break;
-			else if (check == LockedData::eState::Exit)
+			else if (check == lockedData::eState::init)
+				continue;
+			else if (check == lockedData::eState::exit)
 				return false;
 		}
 
-		m_q[userPos].WaitAndLock();
-		m_q[userPos].m_eState = LockedData::eState::None;
+		userIter->WaitAndLock();
+		userIter->m_eState = lockedData::eState::init;
 		return true;
 	}
 public:
-	int GetPos() { return m_q[userPos].m_nPos; }
-	ExampleData GetEX() { return m_q[userPos].m_Ex; }
+	apiData GetData() { return qIter->d; }
 private:
 	void asyncFillQ() {
 
 		while (findNext()) {
 
-			waitForReading();
+			waitForRead();
 
-			m_q[qPos].WaitAndLock();
-			m_q[qPos].m_eState = LockedData::eState::Writed;
-			m_q[qPos].m_nPos = m_nIterPos;
-			m_q[qPos].m_Ex = m_Ex;//set founed item
-			m_q[qPos].Unlock();
+			qIter->WaitAndLock();
+			qIter->m_eState = lockedData::eState::writed;
+			qIter->d = m_dummyData;//set founed item
+			qIter->Unlock();
 
-			qPos = nextPos(qPos); // ++
-
+			IterCircularPlusPlus(qIter); //++
 #if TEST_CODE
 			++m_nTestCounter;
 #endif  
 		}
 
-		waitForReading();
-		m_q[qPos].WaitAndLock();
-		m_q[qPos].m_eState = LockedData::eState::Exit;
-		m_q[qPos].Unlock();
+		waitForRead();
+		qIter->WaitAndLock();
+		qIter->m_eState = lockedData::eState::exit;
+		qIter->Unlock();
 	}
 
-	void waitForReading() {
+	void waitForRead() {
 
 		bool bEscape = false;
 		while (bEscape == false) {
-			m_q[qPos].WaitAndLock();
-			bEscape = (m_q[qPos].m_eState == LockedData::eState::None) ? true : false;
-			m_q[qPos].Unlock();
+			qIter->WaitAndLock();
+			bEscape = (qIter->m_eState == lockedData::eState::init) ? true : false;
+			qIter->Unlock();
 		}
 	}
 
-	static int nextPos(int a_Pos) {
-		a_Pos += 1;
-		return a_Pos == ASYNC_ITER_Q_SIZE ? 0 : a_Pos;
+	arrayForCircular::iterator prevCircular(arrayForCircular::iterator iter) {
+		if (dataQ.begin() == iter)
+			return dataQ.end() - 1;
+
+		return iter - 1;
+	}
+	arrayForCircular::iterator nextCircular(arrayForCircular::iterator iter) {
+		if (dataQ.end() - 1 == iter)
+			return dataQ.begin();
+
+		return iter + 1;
+	}
+	void IterCircularPlusPlus(arrayForCircular::iterator& ref_Iter) {
+		ref_Iter = nextCircular(ref_Iter);
 	}
 
 	bool findNext() {
-		if (m_nIterPos == m_nEnd)
+		if (m_nProgress == m_nEnd)
 			return false;
 
 		//set founed item
-		//m_Ex = ; 
-		m_nIterPos += 1;
+		m_dummyData.dummy = "dummy";
+
+		m_nProgress += 1;
 		return true;
 	}
 };
 
 
-static auto ____ = []() {
+
+#include <iostream>
+int main() {
 	std::ios::sync_with_stdio(false);
 	std::cin.tie(nullptr);
 	std::cout.tie(nullptr);
-	return true;
-}();
 
-int main() {
 	using namespace std;
 
 	for (int i = 0; i < 10000000; i++) {
@@ -175,14 +181,14 @@ int main() {
 
 
 #if TEST_CODE
-		if (count == iter.GetTestCount()) {
-			cout << "Successs!! GetTestCount() : " << count << ", index : " << i << endl;
+		if (count == iter.m_nTestCounter) {
+			cout << "Successs!! iter.m_nTestCounter : " << count << ", index : " << i << endl;
 			continue;
 		}
 
 		cout << "Fail!!" << endl;
 		cout << "count \t\t: " << count << endl;
-		cout << "GetTestCount()\t: " << iter.GetTestCount() << endl;
+		cout << "iter.m_nTestCounter\t: " << iter.m_nTestCounter << endl;
 		break;
 #endif
 	}
