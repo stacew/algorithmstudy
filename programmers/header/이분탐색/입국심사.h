@@ -15,11 +15,11 @@ gcd 최대 공약수, lcm 최소 공배수 //std c++17
 //시간은 1 ~ 10억
 //*. 완료 시간에 심사대가 비어도 기다렸다가 더 빠른 심사대가 있으면 기다림.
 
-long long solution(int n, vector<int> times) {
+long long solution(int people, vector<int> times) {
 
 	sort(times.begin(), times.end());
 	long long lTime = 1; //최소 시간
-	long long rTime = (long long)(times[times.size() - 1]) * n; //최대 시간
+	long long rTime = (long long)(times[times.size() - 1]) * people; //최대 시간
 
 	long long answer = rTime;
 
@@ -27,12 +27,12 @@ long long solution(int n, vector<int> times) {
 		long long midTime = (lTime + rTime) / 2;
 		
 		//해당 시간에 몇 명이나 처리 가능한지 체크
-		long long midPeople = 0;
+		long long peopleCount = 0;
 		for (const auto& t : times) {
-			midPeople += midTime / t;
+			peopleCount += midTime / t;
 		}
 
-		if (midPeople >= n) { //가능한 조건이 될 때 마다 answer 갱신.
+		if (peopleCount >= people) { //가능한 조건이 될 때 마다 answer 갱신.
 			answer = midTime; 
 			rTime = midTime - 1;
 		}
