@@ -87,6 +87,9 @@
 - 2. 방문 집합에서(방문 집합을 제외한) 최소 간선 비용을 선택하고, 해당 정점 방문 집합에 포함.
 - 3. 방문 집합이 다 찰 때까지(2) 반복
 
+- 단속카메라 https://programmers.co.kr/learn/courses/30/lessons/42884
+- 구간의 최소 교집합의 개수 남기는 문제
+
 ## 해시
 - 완주하지 못한 선수 https://programmers.co.kr/learn/courses/30/lessons/42576
 - hash counting. forRange hash, ( other. sort 후 앞, 뒤 비교 )
