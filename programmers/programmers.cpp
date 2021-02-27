@@ -8,12 +8,6 @@
 
 int main()
 {
-	cout << solution({ 1,2,3,1 }); //4
-	cout << endl;
-	cout << solution({ 1,2,3,1,2,3,1 }); //7
-	cout << endl;
-	cout << solution({ 1,5,2,5,6,1,9,2,3,1 }); //23
-	cout << endl;
-	cout << solution({ 10,5,3,1,10,5,20 }); //35
-	cout << endl;
+	cout << solution(5, 12) << endl;//4
+	cout << solution(2, 11) << endl;//3
 }
