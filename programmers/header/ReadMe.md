@@ -22,7 +22,15 @@
 - visited(unordered_set)
 - 여행경로 https://programmers.co.kr/learn/courses/30/lessons/43164
 - BackTrace recursion없이 Stack으로 풀기, Copy 필요 조건을 확실히 알기..
+
 ## 동적계획법(Dynamic Programming)
+- N으로 표현 https://programmers.co.kr/learn/courses/30/lessons/42895
+- 정수 삼각형 https://programmers.co.kr/learn/courses/30/lessons/43105
+- 등굣길 https://programmers.co.kr/learn/courses/30/lessons/42898
+- mod(1000000007) 조건 : 중간 계산 기록할 때 마다 나머지 처리를 하기
+- 도둑질 https://programmers.co.kr/learn/courses/30/lessons/42897
+- Circula 상태에서 최대 값 dp구하는 방법
+- 맨 뒤를 지운다, 맨 앞을 지운다. 최대 값을 비교한다.
 
 ## 스택, 큐
 - 다리를 지나는 트럭 https://programmers.co.kr/learn/courses/30/lessons/42583

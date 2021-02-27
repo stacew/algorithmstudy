@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <vector>
 #include <string>
 #include <memory>		//unique_ptr, make_unique
 
@@ -13,7 +14,6 @@
 #include <stack>
 
 #include <list>
-#include <vector>
 #include <array>
 #include <bitset>
 
