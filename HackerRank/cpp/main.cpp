@@ -1,11 +1,6 @@
 #include "header/StlHeaders.h"
 
 
-
-void main() {
-
-
-	cout << "hello " << endl;
-
+int main() {
 
 }
