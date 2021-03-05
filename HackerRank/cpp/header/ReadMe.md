@@ -11,3 +11,8 @@
 	양방향 리스트에 추가
 	앞에 추가할 경우에 더미 세팅해두면 좋음.
 	자바랑 다르게 stack memory로 더미 만들기( 생성자 확인 )
+
+# Miscellaneous
+	Time Complexity Primality
+	https://www.hackerrank.com/challenges/ctci-big-o/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
+	소수 구할 떄 sqrt를 쓰면 root N의 처리가 가능..
