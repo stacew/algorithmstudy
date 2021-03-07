@@ -85,3 +85,11 @@ vector<int> maxXor(vector<int> arr, vector<int> queries) {
 
 	return ret;
 }
+
+#if 0
+#include "header/Miscellaneous/Maximum Xor.h"
+int main() {
+	maxXor({ 1,3,5,7 }, { 6, 17 });
+	return 0;
+}
+#endif
