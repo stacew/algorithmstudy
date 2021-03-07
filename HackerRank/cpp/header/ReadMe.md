@@ -15,7 +15,7 @@
 # Miscellaneous
 	Time Complexity Primality
 	https://www.hackerrank.com/challenges/ctci-big-o/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
-	소수 구할 떄 sqrt를 쓰면 O(root N)t 처리가 가능..
+	소수 구할 때 sqrt를 쓰면 O(root N)t 처리가 가능..
 
 	Friend Circle Queries
 	https://www.hackerrank.com/challenges/friend-circle-queries/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
@@ -26,3 +26,8 @@
 	Maximum Xor
 	https://www.hackerrank.com/challenges/maximum-xor/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
 	trie 구조 만들고, 반복 이용하기
+
+	Flipping bits
+	https://www.hackerrank.com/challenges/flipping-bits/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
+	해커랭크는 long 8 byte, MSVC long 4 byte로 결과가 다름.
+	long long 처리로 unsigned를 붙이면 어떤 변화가 있는지 확인은 가능..
