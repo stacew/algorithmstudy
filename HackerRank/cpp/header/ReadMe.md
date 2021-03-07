@@ -15,4 +15,14 @@
 # Miscellaneous
 	Time Complexity Primality
 	https://www.hackerrank.com/challenges/ctci-big-o/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
-	소수 구할 떄 sqrt를 쓰면 root N의 처리가 가능..
+	소수 구할 떄 sqrt를 쓰면 O(root N)t 처리가 가능..
+
+	Friend Circle Queries
+	https://www.hackerrank.com/challenges/friend-circle-queries/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
+	kruskal 방식을 생각하고 만든 것은 괜찮은데,
+	함수에 umap 자료구조 넘겨줄 때, refrence를 적지 않아서. 시간초과가 발생.
+	큰 데이터를 넘겨주는 곳에서 많이 호출하면 심하게 느려지므로 확인할 것.
+
+	Maximum Xor
+	https://www.hackerrank.com/challenges/maximum-xor/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
+	trie 구조 만들고, 반복 이용하기

@@ -1,13 +1,9 @@
 #include "header/StlHeaders.h"
-#include "header/Miscellaneous/Time Complexity Primality.h"
+
+#include "header/Miscellaneous/Maximum Xor.h"
 
 int main() {
-	auto base = numeric_limits<long long>::max();
-	//long long max prime 9223372036854775783 => sqrt 3037000499
-	while (base) {
-		if( checkPrime(--base) )
-			break;
-	}
-
+	
+	maxXor({ 1,3,5,7 }, { 6, 17 });
 	return 0;
 }
