@@ -35,7 +35,8 @@ public:
 void infixToPostFix(const string& s, vector<token>& postFix) {
 	// init 
 	unordered_map<char, double> opMap;
-	opMap['('] = -1; //이건 그냥.. 연산자 우선 순위로 pop할 때, map []에 조건문 하나 빼려고 추가함. (find로 하면 end 비교를 또 해야하기 때문에..)
+	opMap['('] = -1;	//연산자 우선 순위로 pop할 때, map []에 조건문 하나 빼려고 추가함. (find로 하면 end 비교를 또 해야하기 때문에..)
+						//어차피 우선 순위의 의미도 있고, 넣는게 확실히 좋은듯..?
 	opMap['+'] = 0;// 낮을 수록 Stack 밑을 지킨다. (postFix 뒷쪽에 붙여야하는 연산자기 때문에)
 	opMap['-'] = 0;
 	opMap['*'] = 1;
