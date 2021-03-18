@@ -1,13 +1,9 @@
 ﻿#include "header/StlHeaders.h"
 
-//#include "header/동적계획법(Dynamic Programming)/등굣길.h"
-//#include "header/동적계획법(Dynamic Programming)/도둑질.h"
-#include "header/동적계획법(Dynamic Programming)/N으로 표현.h"
-#if 0
-#endif
+//#include "header/해시/가장긴subarray.h"
+#include "header/스택,큐/계산기.h"
 
 int main()
 {
-	cout << solution(5, 12) << endl;//4
-	cout << solution(2, 11) << endl;//3
+	solution();
 }

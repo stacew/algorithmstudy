@@ -12,6 +12,25 @@
 	앞에 추가할 경우에 더미 세팅해두면 좋음.
 	자바랑 다르게 stack memory로 더미 만들기( 생성자 확인 )
 
+	Find Merge Point of Two Lists
+	https://www.hackerrank.com/challenges/find-the-merge-point-of-two-joined-linked-lists/problem?h_l=interview&playlist_slugs%5B%5D%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D%5B%5D=linked-lists
+	두 LL의 교차 지점 찾기
+	순회 중 nullptr을 만나면 반대 헤더에서 시작하여 순회하면, 다른 길이라도 결국 만나는 지점 존재
+	공간 : O(1)
+	시간 : O(N)
+
+	Reverse a doubly linked list
+	https://www.hackerrank.com/challenges/reverse-a-doubly-linked-list/problem?h_l=interview&playlist_slugs%5B%5D%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D%5B%5D=linked-lists
+	양방향 LL 뒤집기
+
+	1. 양방향 LL은 제 자리에서 포인터를 변경 가능하므로, 포인터 swap 후 next로 넘겨주면 된다.
+	2. 마지막 노드를 main의 head까지 리턴되도록 처리 추가
+	공간 복잡도 : O(N) : 재귀 또는 스택
+	시간 복잡도 : O(1)
+
+	하지만 양방향 리스트는 반복문으로 처리할 수 있음.
+	공간 복잡도 : O(1)
+
 # Miscellaneous
 	Time Complexity Primality
 	https://www.hackerrank.com/challenges/ctci-big-o/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
@@ -31,3 +50,8 @@
 	https://www.hackerrank.com/challenges/flipping-bits/problem?h_l=interview&playlist_slugs%5B%5D=interview-preparation-kit&playlist_slugs%5B%5D=miscellaneous
 	해커랭크는 long 8 byte, MSVC long 4 byte로 결과가 다름.
 	long long 처리로 unsigned를 붙이면 어떤 변화가 있는지 확인은 가능..
+
+
+# Stacks and Queues
+	Min Max Riddle
+	TODO : 마지막 부분에 대한 정리가 필요

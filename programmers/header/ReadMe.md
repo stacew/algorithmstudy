@@ -67,6 +67,15 @@
 	프린터 https://programmers.co.kr/learn/courses/30/lessons/42587
 	pq, q, pair
 
+	계산기
+	중위식 -> 후위식
+	- 숫자는 바로 붙이고, 연산자를 Stack으로 관리!
+	- 복잡한 괄호 처리 등에 대해서 여기서 처리를 다 해야 한다.
+	후위식 -> 계산 :
+	- 숫자를 스택에 넣고, 연산자가 올 떄 마다 계산
+
+	TODO : 후위식을 String으로 UnParsing하려면 %에 대한 부분이나 -를 연속적으로 들고 있는 부분에 대해서 token화가 필요할 것 같다.
+
 ## 완전탐색
 	모의고사 https://programmers.co.kr/learn/courses/30/lessons/42840
 	auto, iterator 전위, 후위 증가 확인
@@ -166,6 +175,12 @@
 	pair 보다 정보는 구조체 쓰는게 더 편하고 빠른 구현 되는 듯. pair 쓰지 말기..
 	vector 구조체 push_back { }
 	priority_queue 쓸 때, sort로 바꿀 생각 하기.
+
+	중복없는가장긴문자열
+	해시맵으로 중복된 문자를 찾아서, 비교 기준 길이를 갱신함.
+	- 중복된 문자가 비교 기준 길이보다 작으면 무시.
+	- for문 내 계속 Max 갱신이 싫다면, 중복을 찾았을 때와, 마지막 끝날 때 두 번 체크
+	생각보다 예외 케이스가 많아서 위치를 바꾸려면 고려할 TC가 많다..	
 
 ## 힙(Heap)
 	
