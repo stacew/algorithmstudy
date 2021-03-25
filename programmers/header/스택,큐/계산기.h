@@ -138,6 +138,11 @@ private:
 
 			// )
 			if (s[i] == ')') {
+				if (bPrevNumber == false) {
+					throw exception("괄호 앞에 불필요한 연산자");
+					return;
+				}
+
 				if (leftParenCount <= 0) {
 					continue;//remove ( or throw )
 				}
@@ -151,6 +156,7 @@ private:
 				stk.pop(); // ( 를 제거
 
 				leftParenCount--;
+
 				continue;
 			}
 
@@ -216,37 +222,44 @@ private:
 void func() {
 	unordered_map<string, double> tester;
 #if 1
-	tester["2*3*-5"] = -30;
-	tester["-2*-3*-5"] = -30;
-	tester["----2*++3*5"] = 30;
-	tester["-2*3 +5"] = -1;
-	tester["-2*3 +5000%"] = 44;
-	tester["1+(2)"] = 3;
-	tester["1+((((2))))"] = 3;
-	tester["1 - ( 2 * ( 1 - 2 ) )"] = 3;
-	tester["1 - ( 2 - ( 1 - 2 ) )"] = -2;
-	tester["1 - ( 2 - ( 1 - 2 ) ) + 10"] = 8;
-	tester["1 * ( 2 * ( 1 - 2 ) ) * 10"] = -20;
-	tester["- 2 + 3 * 5 - ( 2 * 3 * ( 1 + 2 ) ) + 10"] = 5;
-	tester["-2 + 3 * 5 - ( 2 + 3 - ( 1 - 2 ) ) + 10"] = 17;
-	tester["-2 + 3 * 5 - (2 * -3 * (1 + 2)) + 10"] = 41;
-	tester["1-(3-2+1)"] = -1;
-	tester["- (4 + 5)"] = -9;
-	tester["- (3 + (4 + 5))"] = -12;
-	tester["12312%-1313"] = -1189.88;
-	tester["-2*5+3*2*2212+23"] = 13285;
-	tester["-1-2*5+3"] = -8;
-	tester["1*(2-(2+4-1-2*(5)+3/2*2212+23))+12312%-1313"] = -4523.88;
-	tester["1*(2-(2+4-1-2*(5)+3/2*2212+23))"] = -3334;
-	tester["(2+4-1-2*(5)+3*2*2212+23)"] = 13290;
+	//tester["2*3*-5"] = -30;
+	//tester["-2*-3*-5"] = -30;
+	//tester["----2*++3*5"] = 30;
+	//tester["-2*3 +5"] = -1;
+	//tester["-2*3 +5000%"] = 44;
+	//tester["1+(2)"] = 3;
+	//tester["1+((((2))))"] = 3;
+	//tester["1 - ( 2 * ( 1 - 2 ) )"] = 3;
+	//tester["1 - ( 2 - ( 1 - 2 ) )"] = -2;
+	//tester["1 - ( 2 - ( 1 - 2 ) ) + 10"] = 8;
+	//tester["1 * ( 2 * ( 1 - 2 ) ) * 10"] = -20;
+	//tester["- 2 + 3 * 5 - ( 2 * 3 * ( 1 + 2 ) ) + 10"] = 5;
+	//tester["-2 + 3 * 5 - ( 2 + 3 - ( 1 - 2 ) ) + 10"] = 17;
+	//tester["-2 + 3 * 5 - (2 * -3 * (1 + 2)) + 10"] = 41;
+	//tester["1-(3-2+1)"] = -1;
+	//tester["- (4 + 5)"] = -9;
+	//tester["- (3 + (4 + 5))"] = -12;
+	//tester["12312%-1313"] = -1189.88;
+	//tester["-2*5+3*2*2212+23"] = 13285;
+	//tester["-1-2*5+3"] = -8;
+	//tester["1*(2-(2+4-1-2*(5)+3/2*2212+23))+12312%-1313"] = -4523.88;
+	//tester["1*(2-(2+4-1-2*(5)+3/2*2212+23))"] = -3334;
+	//tester["(2+4-1-2*(5)+3*2*2212+23)"] = 13290;
+	//tester["(100)%"] = 1;
+	tester["(100+)%"] = 1;
 #endif
 
 	cout << "-------- unit test Start --------" << endl;
 	Solution sol;
 	for (const auto item : tester) {
-		double ret = sol.calculate(item.first);
-		if (item.second != ret)
-			cout << "False : " << item.first << " = " << item.second << ", ( myReturn : " << ret << " )" << endl;
+		try {
+			double ret = sol.calculate(item.first);
+			if (item.second != ret)
+				cout << "False : " << item.first << " = " << item.second << ", ( myReturn : " << ret << " )" << endl;
+		}
+		catch (exception e) {
+			cout << item.first << " : " << e.what() << endl;
+		}
 	}
 	cout << "-------- unit test End --------" << endl;
 }
