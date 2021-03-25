@@ -5,5 +5,5 @@
 
 int main()
 {
-	solution();
+	func();
 }
