@@ -1,36 +1,8 @@
-#include <iostream>
-#include <algorithm>
+#pragma once
 #include <vector>
 using namespace std;
-constexpr int SIZE = 10;
-void loopMergedSort();
-std::vector<int> arr{ 7,7,6,8,8,9,9,4,4,3,4, };
-std::vector<int> stdArr;
-int main() {
 
-	for (int i = 0; i < SIZE; i++)
-		arr.push_back(i);
-	stdArr = arr;
-
-
-	loopMergedSort();
-	std::stable_sort(stdArr.begin(), stdArr.end());
-
-	bool bEE = true;
-	for (int i = 0; i < arr.size(); i++) {
-		if (arr[i] != stdArr[i]) {
-
-			cout << "false" << endl;
-			bEE = false;
-			break;
-		}
-	}
-
-	cout << "end" << endl;
-}
-
-//loopMergedSort
-void loopMergedSort() {
+void loopMergedSort(std::vector<int>& arr) {
 	int count = 2;
 	int EndOfArray = arr.size();
 	while (count <= EndOfArray * 2) {
@@ -93,3 +65,36 @@ void loopMergedSort() {
 		count *= 2;
 	}
 }
+
+#if 0
+#include <iostream>
+#include <algorithm>
+
+constexpr int SIZE = 10;
+int main() {
+
+	std::vector<int> arr{ 7,7,6,8,8,9,9,4,4,3,4, };
+	std::vector<int> stdArr;
+
+
+	for (int i = 0; i < SIZE; i++)
+		arr.push_back(i);
+	stdArr = arr;
+
+
+	loopMergedSort();
+	std::stable_sort(stdArr.begin(), stdArr.end());
+
+	bool bEE = true;
+	for (int i = 0; i < arr.size(); i++) {
+		if (arr[i] != stdArr[i]) {
+
+			cout << "false" << endl;
+			bEE = false;
+			break;
+		}
+	}
+
+	cout << "end" << endl;
+}
+#endif

@@ -5,5 +5,5 @@
 
 int main()
 {
-	func();
+	UnitTest계산기();
 }

@@ -1,11 +1,6 @@
 #pragma once
-//#include "MyAllocator.h"
+#include "../allocator/MyAllocator.h"
 #include <unordered_map>
-
-//주의 사항. key로 value를 찾는 경우, [key] == value 비교 사용 금지
-//[ ]를 쓰는 순간 내부 엔트리가 생성되어 새로운 원소가 추가 됩니다.
-//[key, 0]의 엔트리가 생성되기 때문에 메모리 낭비 및 다른 이터레이터 동작 시 버그 발생 가능성
-//=> map.find(key) != map.end() 비교하세요 => IsExist(iter) 추가
 
 template <typename _Kty, typename _Ty, typename _Hasher = std::hash<_Kty>, typename _Keyeq = std::equal_to<_Kty> >
 #ifdef CUSTOM_ALLOCATOR
@@ -18,13 +13,8 @@ class MyUnordered_map : public std::unordered_map < _Kty, _Ty, _Hasher, _Keyeq >
 	using sIterator = typename super::iterator;
 public:
 
-	//O(1)
-	//find(_Kty key){}
 
-	//O(1)
-	bool IsExist(_Kty key) {
-		return super::find(key) != super::end() ? true : false;
-	}
+
 };
 
 
@@ -39,13 +29,7 @@ class MyUnordered_multimap : public std::unordered_multimap< _Kty, _Ty, _Hasher,
 	using sIterator = typename super::iterator;
 public:
 
-	//O(1)
-	//find(_Kty key){}
 
-	//O(1)
-	bool IsExist(_Kty key) {
-		return super::find(key) != super::end() ? true : false;
-	}
 };
 
 

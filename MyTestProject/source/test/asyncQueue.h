@@ -1,12 +1,12 @@
-#include <array>
-#include <future>
+#pragma once
+
 #define TEST_CODE 1
 #if TEST_CODE
 #include <chrono>
 #include <thread>
 using std::this_thread::sleep_for;
-//sleep_for(std::chrono::milliseconds(30));
 #endif
+
 class SpinLock {
 public:
 	void WaitAndLock() {
@@ -19,6 +19,8 @@ private:
 	std::atomic_flag m_SpinLock = ATOMIC_FLAG_INIT;
 };
 
+#include <array>
+#include <future>
 class ASyncIterator {
 #if TEST_CODE
 public:
@@ -111,6 +113,7 @@ private:
 			IterCircularPlusPlus(qIter); //++
 #if TEST_CODE
 			++m_nTestCounter;
+			sleep_for(std::chrono::milliseconds(1));
 #endif  
 		}
 
@@ -160,6 +163,9 @@ private:
 
 
 
+
+
+#if 0 //test ex
 #include <iostream>
 int main() {
 	std::ios::sync_with_stdio(false);
@@ -193,3 +199,4 @@ int main() {
 #endif
 	}
 }
+#endif

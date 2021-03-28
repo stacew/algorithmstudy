@@ -1,6 +1,8 @@
+#pragma once
 #include <iostream>
 using namespace std;
 
+//todo std move
 class Brain
 {
 private:
@@ -65,6 +67,10 @@ void SwapPersonPointerRef2(Person *&a_p1, Person *&a_p2)
 	delete (a_p2);
 	a_p2 = pTemp;
 }
+
+
+#if 0 //test
+
 
 int main()
 {
@@ -146,3 +152,4 @@ int main()
 	//undoSheet = tempSheet;
 	return 0;
 }
+#endif
