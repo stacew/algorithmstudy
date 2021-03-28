@@ -8,6 +8,7 @@ constexpr int taskTime = 500000;
 constexpr int asyncCount = 6;
 
 class ComplexTC : public MyTCWrapper {
+//	bool dummy[100000000]{};
 public:
 	ComplexTC(double a, double b) : r(a), c(b) {
 	}
@@ -37,6 +38,7 @@ auto TestTC(int _count) {
 }
 
 class Complex {
+//	bool dummy[100000000]{};
 public:
 	Complex(double a, double b) : r(a), c(b) {
 	}
@@ -69,23 +71,43 @@ auto Test(int _count) {
 #include "source/stlWrapper/MyVector.h"
 #include "source/stlWrapper/MyUnordered_map.h"
 #include "source/stlWrapper/MyMap.h"
-#include "source/etl/MyEtlVector.h"
+#include "source/etl/EtlVector.h"
 int main() {
-	
-	MyVector<ComplexTC> test1;
-	test1.push_back(ComplexTC(1,2));
-	
+#if 1
+	MyVector<Complex> vecComplex;
+	cout << "- - - " << endl;
+	vecComplex.push_back(*(new Complex(1,2)));
+	cout << "- - - " << endl;
+
+	MyVector<ComplexTC> vecComplexTC;
+	cout << "- - - " << endl;
+	vecComplexTC.push_back(*(new ComplexTC(1, 2)));
+	cout << "- - - " << endl;
+#endif
+#if 1
 	MyUnordered_map<int, int> umap;
+	cout << "- - - " << endl;
 	umap.insert(std::make_pair(1, 2));
+	cout << "- - - " << endl;
 	
-
 	MyMap<int, int> map;
+	cout << "- - - " << endl;
 	map.insert(std::make_pair(1, 2));
+	cout << "- - - " << endl;
+#endif
 
-	MyEtlVector<int> test2;
-	test2.push_back(1);
+#if 1
+	EtlVector<Complex> test3;
+	cout << "- - - " << endl;
+	test3.push_back(Complex(1, 2));
+	cout << "- - - " << endl;
 
-
+	EtlVector<ComplexTC> test4;
+	for(int i = 0; i < 100; i++)
+		test4.push_back(ComplexTC(1,2));
+	cout << "- - - " << endl;
+#endif
+#if 0
 	auto futureTC = std::async(std::launch::async, []() {return TestTC(asyncCount); });
 	cout << "TC\t" << futureTC.get().count() / 100000;
 	for (int i = 0; i < 5; i++) {
@@ -99,6 +121,6 @@ int main() {
 		future = std::async(std::launch::async, []() { return Test(asyncCount); });
 		cout << ", " << future.get().count() / 100000;
 	}
-
+#endif
 	return 0;
 }
