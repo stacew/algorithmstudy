@@ -67,18 +67,6 @@
 	프린터 https://programmers.co.kr/learn/courses/30/lessons/42587
 	pq, q, pair
 
-	계산기
-	중위식->후위식
-	- 숫자는 바로 붙이고, 연산자를 Stack으로 관리!
-	- 복잡한 괄호 처리에 대해서 여기서 처리를 다 해야 한다.
-
-	후위식->계산 :
-	-숫자를 스택에 넣고, 연산자가 올 떄 마다 계산
-
-	괄호 및 + , -, % unparsing 가능한 postfix 생성.
-
-	leetcode 224. Basic Calculator 호환됨.
-
 ## 완전탐색
 	모의고사 https://programmers.co.kr/learn/courses/30/lessons/42840
 	auto, iterator 전위, 후위 증가 확인
@@ -200,3 +188,19 @@
 	pqpqMap이 약간 빠름
 	메모리는 pqpqMap이 좀 더 많음.Delete 없이 Insert만 해도 비례로 차이날 듯.
 	결론 : 코드 복잡해지면 multiset 사용 고려!
+
+## 기타
+
+	계산기 leetcode 224. Basic Calculator 호환.
+	중위식->후위식
+	- 숫자는 바로 붙이고, 연산자를 Stack으로 관리!
+	- 복잡한 괄호 처리에 대해서 여기서 처리를 다 해야 한다.
+
+	후위식->계산 :
+	-숫자를 스택에 넣고, 연산자가 올 떄 마다 계산
+
+	괄호 및 + , -, % unparsing 가능한 postfix 생성.
+
+	RPG와 쿼리 https://programmers.co.kr/learn/courses/30/lessons/76504?language=cpp
+
+
