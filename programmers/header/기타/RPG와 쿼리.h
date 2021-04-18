@@ -1,87 +1,114 @@
 #pragma once
 
-
 using LL = long long;
-void dfs(int count, LL sum, int from, unordered_map<int, unordered_map<int, int >>& gp, unordered_map <LL, int>& vcmap) {
-	if (gp[from].size() == 0)
-		return;
-	
-	for (auto tw : gp[from]) {
-		auto toV = tw.first;
-		LL weight = tw.second;
-		if (vcmap.find(sum + weight) == vcmap.end() || vcmap[sum + weight] > count)
-			vcmap[sum + weight] = count;
+unordered_map<LL, unordered_map<LL, LL>> gp;  //from, to, gold
+unordered_set <LL> visited;
+unordered_map <LL, LL> goldTurnMap;
+unordered_set <LL> firstLine;
+vector< pair < LL, LL > > goldTurnVec;
 
-		dfs(count + 1, sum + weight, toV, gp, vcmap);
+void buildGoldTurnMap(LL turn, LL goldSum, LL from) {
+	if (gp.find(from) == gp.end() || gp[from].size() == 0)
+		return;
+	if (visited.find(from) != visited.end())
+		return;
+	visited.insert(from);
+
+	for (const auto& nextAndGold : gp[from]) {
+		LL gold = nextAndGold.second;
+		if (goldTurnMap.find(goldSum + gold) == goldTurnMap.end() || goldTurnMap[goldSum + gold] > turn)
+			goldTurnMap[goldSum + gold] = turn;
+
+		buildGoldTurnMap(turn + 1, goldSum + gold, nextAndGold.first);
 	}
 }
-void dfsFirstSet(int count, LL sum, int from, unordered_map<int, unordered_map<int, int >>& gp, unordered_map <LL, int>& vcmap, unordered_set <LL>& firstSet) {
-	if (gp[from].size() == 0)
+void buildFirstLine(LL turn, LL goldSum, LL from) {
+	if (gp.find(from) == gp.end() || gp[from].size() == 0)
 		return;
 
-	for (auto tw : gp[from]) {
-		auto toV = tw.first;
-		LL weight = tw.second;
-		if (vcmap[sum + weight] == count)
-			firstSet.insert(sum + weight);
+	if (visited.find(from) != visited.end())
+		return;
+	visited.insert(from);
 
-		dfs(count + 1, sum + weight, toV, gp, vcmap);
+	for (const auto& nextAndGold : gp[from]) {
+		LL gold = nextAndGold.second;
+		if (goldTurnMap[goldSum + gold] == turn)
+			firstLine.insert(goldSum + gold);
+
+		buildFirstLine(turn + 1, goldSum + gold, nextAndGold.first);
 	}
 }
 
-void buildGraphAndSetMin(int n, vector<vector<int>>& roads, unordered_map <LL, int>& vcmap, unordered_set <LL>& firstSet) {
-	unordered_map<int, unordered_map<int, int >> gp; // from, to, weight;
+void buildInfo(int n, vector<vector<int>>& roads, int inPlaceGold) {
+	//build graph
+	gp.clear();
 	for (const auto& road : roads)
 		gp[road[0]][road[1]] = road[2];
 
-	for (int i = 0; i < n; i++)
-		dfs(2, 0, i, gp, vcmap);
-
-	dfsFirstSet(2, 0, 0, gp, vcmap, firstSet);
-}
-
-LL getMinDistance(unordered_map <LL, int>& vcmap, LL q, bool start, unordered_set <LL>& firstSet) {
-	if (q == 0)
-		return 0;
-
-	LL ret = -1;
-
-	for ( const auto& vc : vcmap){
-		LL value = vc.first;
-		if (q < value)
-			continue;
-		
-		LL min = getMinDistance(vcmap, q % value, false, firstSet);
-		if (min == -1)
-			continue;
-
-		LL mul = q / value;
-		int count = vc.second;
-		LL newValue = mul * count + min;
-
-		if (vcmap.find(q) == vcmap.end() || vcmap[q] > (int)newValue) //memo Ãß°¡
-			vcmap[q] = (int)newValue;
-
-		if (start && firstSet.find(value) != firstSet.end())
-			newValue--;
-
-		if (ret == -1 || ret > newValue)
-			ret = newValue;
+	//build goldTurnMap;
+	goldTurnMap.clear();
+	goldTurnMap[inPlaceGold] = 1;
+	for (int i = 0; i < n; i++) {
+		visited.clear();
+		buildGoldTurnMap(2, 0, i);
 	}
 
-	return ret;
+	//build FirstLine
+	firstLine.clear();
+	visited.clear();
+	buildFirstLine(2, 0, 0);
+
+	//build goldTurnVec
+	goldTurnVec.clear();
+	for (const auto& gt : goldTurnMap)
+		goldTurnVec.emplace_back(make_pair(gt.first, gt.second));
+
+	sort(goldTurnVec.begin(), goldTurnVec.end(), [](const auto& gt1, const auto& gt2) {
+		return ((double)gt1.second / gt1.first) < ((double)gt2.second / gt2.first);
+		});
 }
 
-vector<LL> solution(int n, int z, vector<vector<int>> roads, vector<LL> queries) {
-	unordered_map <LL, int> vcmap;
-	unordered_set <LL> firstSet;
-	vcmap[z] = 1;
+LL getMinTurn(LL needGold, bool zeroFirst) {
+	if (needGold == 0)
+		return 0;
 
-	buildGraphAndSetMin(n, roads, vcmap, firstSet);
+	LL retTurn = -1;
+	for (const auto& gt : goldTurnVec) {
+		LL gold = gt.first;
+		LL turn = gt.second;
+		if (needGold < gold)
+			continue;
 
+		LL minTurn = getMinTurn(needGold % gold, turn == 1 ? true : false);
+		if (minTurn == -1)
+			continue;
+
+		LL mul = needGold / gold;
+
+		LL newTurn = mul * turn + minTurn;
+
+		if (zeroFirst && firstLine.find(gold) != firstLine.end()) //firstLine
+			newTurn--;
+
+		if (retTurn == -1 || retTurn > newTurn) {
+			retTurn = newTurn;
+		}
+	}
+
+	return retTurn;
+}
+
+vector<LL> solution(int n, int z, vector<vector<int>> roads, vector<LL> goldQuery100000s) {
 	vector<LL> answer;
-	for (const auto& q : queries)
-		answer.emplace_back(getMinDistance(vcmap, q, true, firstSet));
+
+	buildInfo(n, roads, z);
+
+	for (const auto& gold : goldQuery100000s) {
+		cout << gold << " : ";
+		LL min = getMinTurn(gold, true);
+		answer.emplace_back(min);
+		cout << min << endl;
+	}
 
 	return answer;
 }
